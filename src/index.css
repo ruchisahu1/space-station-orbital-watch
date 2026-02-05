@@ -1,0 +1,313 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Orbital Command: Space Station Operations - Design System
+   NASA Mission Control inspired dark theme with status colors */
+
+@layer base {
+  :root {
+    /* Space dark background with subtle blue undertone */
+    --background: 220 30% 5%;
+    --foreground: 200 20% 90%;
+
+    --card: 220 25% 8%;
+    --card-foreground: 200 20% 90%;
+
+    --popover: 220 25% 10%;
+    --popover-foreground: 200 20% 90%;
+
+    /* Cyan accent - primary system color */
+    --primary: 190 100% 50%;
+    --primary-foreground: 220 30% 5%;
+
+    /* Deep space secondary */
+    --secondary: 220 25% 12%;
+    --secondary-foreground: 200 20% 85%;
+
+    --muted: 220 20% 15%;
+    --muted-foreground: 200 15% 55%;
+
+    /* Amber warning accent */
+    --accent: 35 100% 50%;
+    --accent-foreground: 220 30% 5%;
+
+    /* Red critical */
+    --destructive: 0 85% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 20% 18%;
+    --input: 220 25% 12%;
+    --ring: 190 100% 50%;
+
+    --radius: 0.5rem;
+
+    /* Status colors */
+    --status-nominal: 145 80% 45%;
+    --status-warning: 35 100% 50%;
+    --status-critical: 0 85% 55%;
+    --status-standby: 220 20% 40%;
+
+    /* Glow effects */
+    --glow-cyan: 0 0 20px hsl(190 100% 50% / 0.5);
+    --glow-amber: 0 0 20px hsl(35 100% 50% / 0.5);
+    --glow-red: 0 0 20px hsl(0 85% 55% / 0.5);
+    --glow-green: 0 0 20px hsl(145 80% 45% / 0.5);
+
+    /* Sidebar - dark control panel style */
+    --sidebar-background: 220 28% 7%;
+    --sidebar-foreground: 200 20% 85%;
+    --sidebar-primary: 190 100% 50%;
+    --sidebar-primary-foreground: 220 30% 5%;
+    --sidebar-accent: 220 25% 15%;
+    --sidebar-accent-foreground: 200 20% 90%;
+    --sidebar-border: 220 20% 15%;
+    --sidebar-ring: 190 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+  }
+
+  /* Monospace for data displays */
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer components {
+  /* Glowing panel effect */
+  .panel-glow {
+    @apply relative border border-primary/30 bg-card/80 backdrop-blur-sm;
+    box-shadow: inset 0 1px 0 hsl(var(--primary) / 0.1),
+                0 0 30px hsl(var(--primary) / 0.1);
+  }
+
+  /* Status indicator base */
+  .status-indicator {
+    @apply w-3 h-3 rounded-full;
+    animation: pulse-glow 2s infinite;
+  }
+
+  .status-nominal {
+    @apply bg-[hsl(var(--status-nominal))];
+    box-shadow: var(--glow-green);
+  }
+
+  .status-warning {
+    @apply bg-[hsl(var(--status-warning))];
+    box-shadow: var(--glow-amber);
+    animation: pulse-warning 1s infinite;
+  }
+
+  .status-critical {
+    @apply bg-[hsl(var(--status-critical))];
+    box-shadow: var(--glow-red);
+    animation: pulse-critical 0.5s infinite;
+  }
+
+  .status-standby {
+    @apply bg-[hsl(var(--status-standby))];
+  }
+
+  /* Data display styling */
+  .data-readout {
+    @apply font-mono text-primary tracking-wide;
+    text-shadow: 0 0 10px hsl(var(--primary) / 0.5);
+  }
+
+  /* Control button base */
+  .control-button {
+    @apply px-4 py-2 border border-primary/50 bg-primary/10 text-primary 
+           font-medium uppercase tracking-wider text-sm
+           transition-all duration-200
+           hover:bg-primary/20 hover:border-primary
+           active:scale-95;
+    box-shadow: 0 0 15px hsl(var(--primary) / 0.2);
+  }
+
+  .control-button:hover {
+    box-shadow: 0 0 25px hsl(var(--primary) / 0.4);
+  }
+
+  /* Warning button variant */
+  .control-button-warning {
+    @apply border-[hsl(var(--status-warning))]/50 bg-[hsl(var(--status-warning))]/10 
+           text-[hsl(var(--status-warning))]
+           hover:bg-[hsl(var(--status-warning))]/20 hover:border-[hsl(var(--status-warning))];
+  }
+
+  /* Critical button variant */
+  .control-button-critical {
+    @apply border-destructive/50 bg-destructive/10 text-destructive
+           hover:bg-destructive/20 hover:border-destructive;
+  }
+
+  /* Screen scanline effect */
+  .scanlines::after {
+    content: '';
+    @apply absolute inset-0 pointer-events-none opacity-5;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      hsl(var(--primary) / 0.1) 2px,
+      hsl(var(--primary) / 0.1) 4px
+    );
+  }
+
+  /* Grid background */
+  .grid-bg {
+    background-image: 
+      linear-gradient(hsl(var(--primary) / 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--primary) / 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    transition: background-image 0.3s ease;
+  }
+
+  /* Grid reaction: correct = station stabilizes (green) */
+  .grid-bg[data-reaction="correct"] {
+    background-image: 
+      linear-gradient(hsl(var(--status-nominal) / 0.12) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--status-nominal) / 0.12) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  /* Grid reaction: wrong = station took a hit (red flicker) */
+  .grid-bg[data-reaction="wrong"] {
+    background-image: 
+      linear-gradient(hsl(var(--status-critical) / 0.15) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--status-critical) / 0.15) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  /* Mission AI horizontal panel: container for height-based layout */
+  .mission-ai-container {
+    container-type: size;
+    container-name: mission-ai;
+  }
+
+  /* When Mission AI has more vertical space: stacked layout (header top, body below) */
+  @container mission-ai (min-height: 200px) {
+    .mission-ai-panel {
+      @apply flex-col items-stretch p-5 gap-4;
+    }
+    .mission-ai-panel .mission-ai-header {
+      @apply shrink-0 gap-4;
+    }
+    .mission-ai-panel .mission-ai-body {
+      flex: 1;
+      min-height: 0;
+      @apply flex flex-row gap-4;
+    }
+    .mission-ai-panel .mission-ai-body .mission-ai-message {
+      @apply flex-1 min-w-0 p-4 text-base;
+    }
+    .mission-ai-panel .mission-ai-body .mission-ai-stats {
+      @apply shrink-0 gap-4;
+    }
+    .mission-ai-panel .mission-ai-header .mission-ai-icon {
+      @apply w-12 h-12;
+    }
+    .mission-ai-panel .mission-ai-header .mission-ai-icon svg {
+      @apply w-7 h-7;
+    }
+    .mission-ai-panel .mission-ai-title {
+      @apply text-base;
+    }
+    .mission-ai-panel .mission-ai-subtitle {
+      @apply text-sm;
+    }
+    .mission-ai-panel .mission-ai-stat {
+      @apply p-3;
+    }
+    .mission-ai-panel .mission-ai-stat-label {
+      @apply text-sm mb-1.5;
+    }
+    .mission-ai-panel .mission-ai-stat-value {
+      @apply text-sm;
+    }
+  }
+
+  @container mission-ai (min-height: 280px) {
+    .mission-ai-panel {
+      @apply p-6 gap-5;
+    }
+    .mission-ai-panel .mission-ai-header .mission-ai-icon {
+      @apply w-14 h-14;
+    }
+    .mission-ai-panel .mission-ai-header .mission-ai-icon svg {
+      @apply w-8 h-8;
+    }
+    .mission-ai-panel .mission-ai-title {
+      @apply text-lg;
+    }
+    .mission-ai-panel .mission-ai-body .mission-ai-message {
+      @apply p-5 text-[15px] leading-relaxed;
+    }
+    .mission-ai-panel .mission-ai-stat {
+      @apply p-3.5;
+    }
+    .mission-ai-panel .mission-ai-stat-value {
+      @apply text-base;
+    }
+  }
+}
+
+@layer utilities {
+  /* Text glow effects */
+  .text-glow-cyan {
+    text-shadow: 0 0 10px hsl(var(--primary) / 0.7),
+                 0 0 20px hsl(var(--primary) / 0.5),
+                 0 0 30px hsl(var(--primary) / 0.3);
+  }
+
+  .text-glow-amber {
+    text-shadow: 0 0 10px hsl(var(--status-warning) / 0.7),
+                 0 0 20px hsl(var(--status-warning) / 0.5);
+  }
+
+  .text-glow-red {
+    text-shadow: 0 0 10px hsl(var(--status-critical) / 0.7),
+                 0 0 20px hsl(var(--status-critical) / 0.5);
+  }
+
+  .text-glow-green {
+    text-shadow: 0 0 10px hsl(var(--status-nominal) / 0.7),
+                 0 0 20px hsl(var(--status-nominal) / 0.5);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes pulse-warning {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes pulse-critical {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
