@@ -71,8 +71,8 @@ export function IntroPage() {
           </motion.div>
           
           <h1 className="text-5xl md:text-7xl font-bold mb-4 text-glow-cyan">
-            <span className="text-primary">Orbital</span>
-            <span className="text-foreground"> Command</span>
+            <span className="text-primary">AI Space</span>
+            <span className="text-foreground"> Station Officer</span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground">
             Space Station Operations & Safety
