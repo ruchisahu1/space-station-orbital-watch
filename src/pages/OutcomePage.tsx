@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Trophy, Shield, RefreshCcw, BookOpen, Rocket, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Trophy, Shield, RefreshCcw, BookOpen, Rocket, CheckCircle, AlertTriangle, Home } from 'lucide-react';
 import { useGame } from '@/contexts/GameContext';
 
 export function OutcomePage() {
@@ -210,6 +210,15 @@ export function OutcomePage() {
             >
               <Rocket className="w-4 h-4" />
               Advanced Mode
+            </motion.button>
+            <motion.button
+                onClick={() => window.location.href = "https://missionx.junkbot.co/user/gamified"}
+                className="control-button flex items-center justify-center gap-2"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+            >
+              <Home className="w-4 h-4" />
+              Home
             </motion.button>
           </motion.div>
         </div>
